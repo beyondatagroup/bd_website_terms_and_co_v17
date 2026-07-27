@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    <template id="payment_form_inherit_terms_alert"-->
+<!--              inherit_id="payment.form">-->
+<!--        &lt;!&ndash; Show alert before Payment Method &ndash;&gt;-->
+<!--        <xpath expr="//div[@id='o_payment_form_options']"-->
+<!--               position="before">-->
+<!--            <t t-if="request.website.show_terms_conditions and request.website.alert_message">-->
+
+<!--                <div class="alert alert-warning mb-3" role="alert">-->
+<!--                    <i class="fa fa-exclamation-triangle me-2"/>-->
+<!--                    <span t-esc="request.website.alert_message"/>-->
+<!--                </div>-->
+
+<!--            </t>-->
+
+<!--        </xpath>-->
+
+<!--    </template>-->
+    <template id="website_sale_terms_block" name="Website Sale Terms Block">
+        <t t-if="request.website.show_terms_conditions and request.website.alert_message">
+
+                <div class="alert alert-warning mb-3 mt-3" role="alert">
+                    <i class="fa fa-exclamation-triangle me-2"/>
+                    <span t-esc="request.website.alert_message"/>
+                </div>
+
+            </t>
+
+
+
+        <t t-if="request.website.show_terms_conditions">
+            <h5 class="mb-3 fw-bold">
+                Terms &amp; Conditions
+            </h5>
+            <div class="card mt-3 mb-3">
+                <div class="card-body">
+
+                    <!-- SINGLE -->
+                    <t t-if="request.website.terms_and_conditions_types == 'single'">
+
+                        <h5>
+                            <t t-esc="request.website.terms_title"/>
+                        </h5>
+
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   id="accept_terms"
+                                   name="accept_terms"
+                                   class="form-check-input o_terms_checkbox"
+                                   t-att-checked="'checked' if request.website.is_default_check else None"/>
+
+                            <label class="form-check-label"
+                                   for="accept_terms">
+                                <t t-esc="request.website.terms_label"/>
+                            </label>
+                        </div>
+                        <a href="#"
+                           data-bs-toggle="modal"
+                           data-bs-target="#termsModalSingle">
+                            See Terms &amp; Conditions
+                        </a>
+
+                        <div class="modal fade"
+                             id="termsModalSingle"
+                             tabindex="-1">
+
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">
+                                            <t t-esc="request.website.terms_title"/>
+                                        </h5>
+
+                                        <button type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"/>
+                                    </div>
+
+                                    <div class="modal-body"
+                                         style="max-height:500px;overflow:auto;">
+
+                                        <t t-out="request.website.terms_content"/>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button"
+                                                class="btn btn-primary"
+                                                data-bs-dismiss="modal">
+                                            Close
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+
+                    <!-- MULTIPLE then fatch report in to the website.terms.condition-->
+                    <t t-if="request.website.terms_and_conditions_types == 'multi'">
+                        <t t-foreach="request.website.website_terms_condition_ids"
+                           t-as="term">
+
+                            <div class="mb-4">
+
+                                <h5>
+                                    <t t-esc="term.name"/>
+                                </h5>
+
+                                <div class="form-check">
+                                    <input type="checkbox"
+                                           class="form-check-input o_terms_checkbox"
+                                           t-att-id="'term_%s' % term.id"
+                                           t-att-name="'term_%s' % term.id"
+                                           t-att-checked="'checked' if term.is_default_check else None"/>
+
+                                    <label t-att-for="'term_%s' % term.id">
+                                        <t t-esc="term.terms_label"/>
+                                    </label>
+
+                                </div>
+
+                                <a href="#"
+                                   data-bs-toggle="modal"
+                                   t-att-data-bs-target="'#termsModal_%s' % term.id">
+                                    See Terms &amp; Conditions
+                                </a>
+
+                                <!-- Modal -->
+                                <div class="modal fade"
+                                     t-att-id="'termsModal_%s' % term.id"
+                                     tabindex="-1">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">
+                                                    <t t-esc="term.name"/>
+                                                </h5>
+
+                                                <button type="button"
+                                                        class="btn-close"
+                                                        data-bs-dismiss="modal"/>
+
+                                            </div>
+
+                                            <div class="modal-body"
+                                                 style="max-height:500px;overflow:auto;">
+                                                <t t-out="term.description"/>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button"
+                                                        class="btn btn-primary"
+                                                        data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="website_sale_payment_inherit_terms" inherit_id="website_sale.payment">
+        <xpath expr="//t[@t-call='website_sale.address_on_payment']" position="after">
+            <t t-call="bd_website_terms_and_conditions.website_sale_terms_block"/>
+        </xpath>
+    </template>
+
+
+<!--    <template id="website_sale_payment_inherit_terms" inherit_id="website_sale.payment">-->
+<!--        <xpath expr="//t[@t-call='website_sale.address_on_payment']" position="before">-->
+<!--            <t t-call="bd_website_terms_and_conditions.website_sale_terms_block"/>-->
+<!--        </xpath>-->
+<!--    </template>-->
+</odoo>

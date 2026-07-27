@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="res_config_settings_view_form_inherit_terms_conditions" model="ir.ui.view">
+        <field name="name">website.res.config.settings.inherit.terms.conditions</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='website_info_settings']" position="after">
+                <block title="Terms &amp; Conditions" id="website_terms_conditions_settings">
+                    <setting string="Show Terms &amp; Conditions"
+                             help="On set to True Terms and Conditions will be visible at sign up">
+                        <field name="show_terms_conditions"/>
+                    </setting>
+
+                    <setting invisible="not show_terms_conditions" class="col-12 col-lg-12">
+                        <div class="w-100">
+                            <!-- Type -->
+                            <div class="row mt16">
+                                <div class="col-lg-3">
+                                    <label for="terms_and_conditions_types"/>
+                                </div>
+                                <div class="col-lg-6">
+                                    <field name="terms_and_conditions_types"/>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mt16" invisible="not terms_and_conditions_types == 'multi'">
+                                <div class="o_form_label me-2">
+                                    Multi Terms &amp; Conditions
+                                </div>
+                                <button name="action_open_terms_conditions"
+                                        type="object"
+                                        class="btn btn-link p-0 me-2"
+                                        icon="fa-external-link"/>
+
+                            </div>
+
+                            <!-- Alert Message -->
+                            <div class="row mt16">
+                                <div class="col-lg-3">
+                                    <label for="alert_message"/>
+                                </div>
+                                <div class="col-lg-6">
+                                    <field name="alert_message"
+                                           placeholder="Please accept the Terms &amp; Conditions before creating your account."
+                                           nolabel="1"/>
+                                </div>
+                            </div>
+
+                            <!-- Default Check -->
+                            <div class="row mt16" invisible="not terms_and_conditions_types == 'single'">
+                                <div class="col-lg-3">
+                                    <label for="is_default_check"/>
+                                </div>
+                                <div class="col-lg-6">
+                                    <field name="is_default_check"/>
+                                </div>
+                            </div>
+
+                            <div class="row mt16" invisible="not terms_and_conditions_types == 'single'">
+                                <div class="col-lg-6 mb-3">
+                                    <label for="terms_title" class="col-lg-3"/>
+                                    <div class="col-lg-9">
+                                        <field name="terms_title" placeholder="Terms and Conditions"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-3">
+                                    <label for="terms_label" class="col-lg-3"/>
+                                    <div class="col-lg-9">
+                                        <field name="terms_label"
+                                               placeholder="I agree to the terms and conditions"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt16" invisible="not terms_and_conditions_types == 'single'">
+                                <div class="col-12">
+                                    <label for="terms_content" class="fw-bold mb-2"/>
+
+                                    <div style="max-height: 350px; overflow-y: auto;"
+                                         class="border rounded p-2 bg-white w-100">
+                                        <field name="terms_content"
+                                               widget="html"
+                                               class="w-100"
+                                               style="width: 100% !important; min-height: 300px;"
+                                               options="{'style-inline': true, 'resizable': false}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_website_terms_condition_tree" model="ir.ui.view">
+        <field name="name">website.terms.condition.tree</field>
+        <field name="model">website.terms.condition</field>
+        <field name="arch" type="xml">
+            <tree string="Website Terms &amp; Conditions">
+                <field name="name"/>
+                <field name="terms_label"/>
+                <field name="is_default_check"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_website_terms_condition_form" model="ir.ui.view">
+        <field name="name">website.terms.condition.form</field>
+        <field name="model">website.terms.condition</field>
+        <field name="arch" type="xml">
+            <form string="Website Terms &amp; Conditions">
+                <sheet>
+
+                    <group col="2">
+                        <group>
+                            <field name="name"/>
+                            <field name="terms_label"/>
+                        </group>
+
+                        <group>
+                            <field name="is_default_check"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Description">
+
+                            <field name="description"
+                                   widget="html"
+                                   nolabel="1"
+                                   options="{'style-inline': true}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_website_terms_condition_search" model="ir.ui.view">
+        <field name="name">website.terms.condition.search</field>
+        <field name="model">website.terms.condition</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_website_terms_condition" model="ir.actions.act_window">
+        <field name="name">Terms &amp; Conditions</field>
+        <field name="res_model">website.terms.condition</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_website_terms_condition_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Terms &amp; Conditions.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem
+            id="menu_website_terms_condition"
+            name="Terms &amp; Conditions"
+            parent="website.menu_website_global_configuration"
+            action="action_website_terms_condition"
+            sequence="20"/>
+
+</odoo>
