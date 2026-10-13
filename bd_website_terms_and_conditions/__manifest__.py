@@ -35,12 +35,11 @@
 
     "author": "BeyonData Solutions Private Limited",
     "website": "https://www.beyondatagroup.com/",
-    "license": "LGPL-3",
+    "license": "OPL-1",
 
     "depends": [
         "base_setup",
         "website",
-        # "auth_signup",
         "payment",
         "website_sale",
     ],

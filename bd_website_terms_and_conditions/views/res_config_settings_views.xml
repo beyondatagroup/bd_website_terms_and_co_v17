@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <field name="alert_message"
-                                           placeholder="Please accept the Terms &amp; Conditions before creating your account."
+                                           placeholder="Please accept the Terms &amp; Conditions before proceeding with your purchase"
                                            nolabel="1"/>
                                 </div>
                             </div>
