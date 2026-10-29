@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_website_terms_user,website.terms.condition.user,model_website_terms_condition,base.group_user,1,1,1,1
 access_website_terms_public,website.terms.condition.public,model_website_terms_condition,base.group_public,1,0,0,0
+access_website_terms_portal,website.terms.condition.portal,model_website_terms_condition,base.group_portal,1,0,0,0
